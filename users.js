@@ -5,6 +5,7 @@ var bp = require('body-parser');
 var app = express();
 var secret = '123456'
 
+
 app.use(bp.json());
 app.use(bp.urlencoded({
     extended: true
@@ -151,7 +152,7 @@ exports.updateUser = function (req, res) {
             })
             .then(function (count) {
                 //console.log(count)
-                res.status(204).send({userMessage: "Actualizado"})
+                res.status(204).send({ userMessage: "Actualizado" })
             }).catch(function (err) {
                 //console.log("Error el usuario no existe")
                 res.status(404).send({ userMessage: "Usuario no existente", devMessage: "" })
@@ -161,8 +162,8 @@ exports.updateUser = function (req, res) {
 }
 
 exports.correctLog = function (nick, pass, callback) {
-    knex('users').where('nick', nick).where('pass', pass)
-        .count('nick as c').then(function (total) {
+    knex('users').count('nick as c').where('nick', nick).where('pass', pass)
+        .then(function (total) {
             if (total[0].c == 1) {
                 callback(true)
             } else {
@@ -171,17 +172,29 @@ exports.correctLog = function (nick, pass, callback) {
         })
 }
 
+function correcto(data, callback) {
+    knex('users').count('nick as c').where('nick', data.nick).where('pass',data.pass).then(function (total) {
+        if (total[0].c == 1) {
+            callback(true)
+        } else {
+            callback(false)
+        }
+    })
+}
+
 exports.login = function (pet, res) {
     var nick = pet.body.nick;
     var pass = pet.body.pass;
+
+    var data ={nick: nick, pass:pass}
     // console.log(pet.body.nick)
-    users.correctLog(nick, pass, function (exists) {
+    correcto(data, function (exists) {
         if (exists) {
-            users.getUserByNick(nick, function (data) {
-                res.status(201).send({
-                    "data": "ok"
-                })
-            })
+            knex('users').where('nick', data.nick).first().then(function (query) {
+                res.status(200).send({usuario: query})
+            }).catch((error) => {
+                res.status(404).send({ userMessage: "Usuario no existente", devMessage: "" })
+            });
         } else {
 
             res.status(401).send({
