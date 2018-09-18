@@ -31,12 +31,9 @@ app.delete('/users/:id',users.deleteUser);
 
 
 
-app.listen(port, (err) => {
-  if (err) {
-    return console.log('something bad happened', err)
-  }
-
-  console.log(`server is listening on ${port}`)
+app.listen(process.env.PORT || 3000, function ()  {
+ 
+  //console.log(`server is listening on ${port}`)
 
 
   
