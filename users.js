@@ -183,20 +183,21 @@ function correcto(data, callback) {
 }
 
 exports.login = function (pet, res) {
-    var nick = pet.body.nick;
-    var pass = pet.body.pass;
 
-    var data ={nick: nick, pass:pass}
-    // console.log(pet.body.nick)
+    
+    var data = pet.body
     correcto(data, function (exists) {
         if (exists) {
             knex('users').where('nick', data.nick).first().then(function (query) {
                 res.status(200).send({usuario: query})
             }).catch((error) => {
+                console.log("Hola")
+    
                 res.status(404).send({ userMessage: "Usuario no existente", devMessage: "" })
             });
         } else {
-
+            console.log("Adios")
+    
             res.status(401).send({
                 userMessage: "El usuario no existe", devMessage: "",
                 _links: {
