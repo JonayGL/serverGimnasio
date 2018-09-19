@@ -184,7 +184,7 @@ function correcto(data, callback) {
 
 exports.login = function (pet, res) {
 
-    
+    console.log(pet.body)
     var data = pet.body
     correcto(data, function (exists) {
         if (exists) {
