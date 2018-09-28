@@ -44,6 +44,7 @@ app.listen(process.env.PORT || 3000, function ()  {
     table.string('apellidos');
     table.string('edad');
     table.string('altura');
+    table.string('peso');
     table.primary('nick');
 }).then(function () {
    // console.log('Users Table is Created!');  

@@ -82,6 +82,7 @@ exports.createUser = function (req, res) {
     var apellidos = req.body.apellidos;
     var edad = req.body.edad;
     var altura = req.body.altura;
+    var peso = req.body.peso;
 
     existe(nick, function (exists) {
         //console.log(exists)
@@ -92,7 +93,8 @@ exports.createUser = function (req, res) {
                 nombre: nombre,
                 apellidos: apellidos,
                 edad: edad,
-                altura: altura
+                altura: altura,
+                peso: peso
             }
             knex('users').insert([
                 {
@@ -101,7 +103,8 @@ exports.createUser = function (req, res) {
                     nombre: data.nombre,
                     apellidos: data.apellidos,
                     edad: data.edad,
-                    altura: data.altura
+                    altura: data.altura,
+                    peso: data.peso
                 }
             ]).then(function (f) {
                 knex('users').where('nick', data.nick).first().then(function (query) {
@@ -136,7 +139,8 @@ exports.updateUser = function (req, res) {
             nombre: nombre,
             apellidos: apellidos,
             edad: edad,
-            altura: altura
+            altura: altura,
+            peso: peso
         }
 
         knex('users')
@@ -147,7 +151,9 @@ exports.updateUser = function (req, res) {
                 nombre: data.nombre,
                 apellidos: data.apellidos,
                 edad: data.edad,
-                altura: data.altura
+                altura: data.altura,
+                peso: peso
+                
 
             })
             .then(function (count) {
