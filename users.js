@@ -127,7 +127,7 @@ exports.updateUser = function (req, res) {
     var apellidos = req.body.apellidos;
     var edad = req.body.edad;
     var altura = req.body.altura;
-
+    var peso = req.body.peso;
 
     if (!isNaN(id)) {
         res.status(401).send({ userMessage: "Las id del usuario no tiene que ser numerica", devMessage: "" })

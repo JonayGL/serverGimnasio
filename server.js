@@ -37,7 +37,7 @@ app.listen(process.env.PORT || 3000, function ()  {
 
 
   
-  knex.schema.createTableIfNotExists('users', function (table) {
+  knex.schema.createTable('users', function (table) {
     table.string('nick');
     table.integer('pass');
     table.string('nombre');
