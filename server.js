@@ -36,8 +36,8 @@ app.listen(process.env.PORT || 3000, function ()  {
   //console.log(`server is listening on ${port}`)
 
 
-  knex.schema.dropTableIfExists('users');
-  knex.schema.createTable('users', function (table) {
+  
+  knex.schema.createTableIfNotExists('users', function (table) {
     table.string('nick');
     table.integer('pass');
     table.string('nombre');
